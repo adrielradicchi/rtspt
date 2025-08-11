@@ -1,0 +1,20 @@
+<Layouts.app flash={@flash} current_scope={@current_scope}>
+  <div class="flex min-h-screen">
+    <main class="flex-1 p-8">
+      <h2 class="text-2xl font-bold mb-4">Subscribe to Multiple Stocks</h2>
+      <.form for={@form} id="subscribe-form" phx-submit="subscribe">
+        <.input field={@form[:symbol]} label="Stock Symbol (e.g. AAPL, AMZN, TSLA, MSFT)" required />
+        <button type="submit" class="btn btn-primary ml-2">Subscribe</button>
+      </.form>
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold mb-2">Subscribed Stocks</h3>
+        <ul>
+          <li :for={symbol <- MapSet.to_list(@subscribed_symbols)}>
+            <span class="font-mono">{symbol}: $ {@prices[symbol] || "waiting..."}</span>
+            <button id={"unsubscribe-#{symbol}"} phx-click="unsubscribe" phx-value-symbol={symbol} class="ml-2 text-red-600">Unsubscribe</button>
+          </li>
+        </ul>
+      </div>
+    </main>s
+  </div>
+</Layouts.app>
